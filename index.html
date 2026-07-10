@@ -1,7 +1,7 @@
 <html>
 <body style="background-color:#1b192b;">
 <title>Eaven</title>
-<link rel="icon" type="image/x-icon" href="https://code.visualstudio.com/assets/images/code-stable.png">
+<link rel="icon" type="image/x-icon" href="/image/Laterna_Vigilis_Shape.png">
 <head><span></span>
 <div class="banner">
   <div class="title">Eaven</div>
@@ -13,6 +13,7 @@
     <div style="text-align: center;"></div>
     </div>
   </div></head>
+<div class="title1">Oathkeepers</div>
 <h6>Eaven</h6><h5 class="hidden"><a href="https://eavensx.github.io/">Home</a> <a href="https://eavensx.github.io/">About</a></h5>
 </body>
 </html>
@@ -71,9 +72,9 @@
         height: 300px;
         width: 300px;
         border-radius: 50%;
-        top:-150px;
-        right: -160px;
-        background: blueviolet;
+        top: 30px;
+        right: -50px;
+        background: #5907a6;
         transform: scale(1);
         transform-origin: 50% 50%;
         transition: all 0.5s ease-in-out;
@@ -108,9 +109,9 @@
 
     .banner .icon {
         position: absolute;
-        width: 100px;
-        height: 125px;
-        top: 0%;
+        width: 200px;
+        height: 200px;
+        top: 80px;
         right: 0%;
         background-image:
             url(/image/Laterna_Vigilis_Shape.png);
@@ -142,59 +143,15 @@
         
     }
 
-@media screen and (min-width: 768px) and (max-width: 960px) {
-    .banner .stats,
-    .banner .mini-title {
-        display:none;
+    .title1 {
+        font-family: 'Times New Roman', Times, serif;
+        font-size:50px;
+        color:blueviolet;
+        text-align: center;
     }
 
-    .banner:before {
-        right: -300px;
-        transform: none;
-        transition: none;
-    }
-
-    .banner:hover:before,
-    .banner:before,
-    .banner .title, 
-    .banner:hover .title,
-    .banner .desc,
-    .banner:hover .desc,
-    .banner .icon,
-    .banner:hover .icon {
-        transition: none;
-        transform: none;
-    }
-
-    .banner:hover .title {
-        color: #244a75;
-    }
-
-    .banner:hover .desc {
-        color: #d7e4ef
-    }
-
-    .banner .icon {
-        width: 200px;
-    }
-    
-    .banner .title {
-    	font-size: 50px;
-    }
-    
-    .banner .desc {
-    	font-size: 12px;
-    }
-}
-
-    @media only screen and (max-width: 768px) {
-  .hidden {
-  	display:none;
-   }
-}
-    @media only screen and (min-width: 770px) {
-  .hidden1 {
-  	display:none;
-  }
+@font-face {
+    font-family: "Hywenhei";
+    src: url(/font/Hywenhei);
 }
     </style>
