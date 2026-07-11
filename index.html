@@ -13,8 +13,8 @@
 <div class="site-topbar">
   <div class="site-logo">Eaven</div>
   <div class="site-nav">
-    <a href="https://eavensx.github.io/">Home</a>
-    <a href="https://eavensx.github.io/">About</a>
+    <a href="https://eavensx.github.io/">UID : 1819282435 (Asia)</a>
+    <!--<a href="https://eavensx.github.io/">About</a>-->
     <button id="musicToggle" class="music-toggle" title="Turn off music" aria-label="Turn off or on music">&#128266;</button>
   </div>
 </div>
@@ -102,7 +102,7 @@
 </div>
 
 <p>&nbsp;</p>
-<h6>Eaven</h6>  <p class="uid">UID : 1819282435 (Asia)</p>
+<!--<h6>Eaven</h6>  <p class="uid">UID : 1819282435 (Asia)</p>-->
 
 </body>
 </html>
@@ -586,7 +586,7 @@ html, body {
         let userPaused = false;
 
         function setIcon(playing) {
-          toggleBtn.innerHTML = playing ? '&#9654;' : '&#9208;';
+          toggleBtn.innerHTML = playing ? '&#9208;' : '&#9654;';
           toggleBtn.classList.toggle('muted', !playing);
           toggleBtn.title = playing ? 'Now playing' : 'Now paused';
         }
