@@ -9,9 +9,11 @@
   <div class="site-nav">
     <a href="https://eavensx.github.io/">Home</a>
     <a href="https://eavensx.github.io/">About</a>
+    <button id="musicToggle" class="music-toggle" title="Turn off music" aria-label="Turn off or on music">&#128266;</button>
   </div>
 </div>
-<p>&nbsp;</p>
+<audio id="bgMusic" src="bgmusic.mp3" loop preload="auto"></audio>
+<!--<p>&nbsp;</p>-->
 <div class="banner">
   <div class="title">Eaven</div>
   <div class="desc">Those who <span style="color: #4d7fff;">love</span> you will <span style="color: #4d7fff;">celebrate</span> your <span style="color: #4d7fff;">arrival</span> in this <span style="color: #4d7fff;">world</span> by preparing a <span style="color: #4d7fff;">feast</span>, singing <span style="color: #4d7fff;">songs</span>, and offering <span style="color: #4d7fff;">blessings</span>. When you <span style="color: #4d7fff;">pass away</span>, those who miss you will <span style="color: #4d7fff;">grieve</span> by holding a <span style="color: #4d7fff;">funeral</span> and lighting <span style="color: #4d7fff;">lanterns</span>. In <span style="color: #4d7fff;">life</span> and in <span style="color: #4d7fff;">death</span>, there will always be those who are moved by your <span style="color: #4d7fff;">existence</span>. So, take the <span style="color: #4d7fff;">chance</span>, while your <span style="color: #4d7fff;">soul</span> is full of <span style="color: #4d7fff;">life</span>, to come together with your <span style="color: #4d7fff;">loved</span> ones and be <span style="color: #4d7fff;">happy</span></strong>
@@ -244,9 +246,33 @@
         align-items: center;
         justify-content: space-between;
         padding: 0 32px;
-        background: linear-gradient(90deg, #0a0e26, #16265e 55%, #1c3aa8);
+        background: linear-gradient(rgba(10,14,38,0.55), rgba(10,14,38,0.65)), url('topbar_banner.png');
+        background-size: cover;
+        background-position: center;
         box-shadow: 0 2px 12px rgba(0,0,0,0.5);
         z-index: 10;
+    }
+
+    .music-toggle {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 34px;
+        height: 34px;
+        border-radius: 50%;
+        border: 1px solid rgba(191,230,255,0.4);
+        background: rgba(13,19,48,0.55);
+        color: #bfe6ff;
+        font-size: 1.05rem;
+        cursor: pointer;
+        transition: background 0.3s, transform 0.2s;
+    }
+    .music-toggle:hover {
+        background: rgba(77,127,255,0.45);
+        transform: scale(1.08);
+    }
+    .music-toggle.muted {
+        color: #8a93b8;
     }
 
     .site-topbar .site-logo {
@@ -483,5 +509,54 @@ html, body {
         });
 
         restartProgress();
+      });
+    </script>
+
+    <script>
+      document.addEventListener('DOMContentLoaded', () => {
+        const music = document.getElementById('bgMusic');
+        const toggleBtn = document.getElementById('musicToggle');
+        let userPaused = false;
+
+        function setIcon(playing) {
+          toggleBtn.innerHTML = playing ? '&#9654;' : '&#9208;';
+          toggleBtn.classList.toggle('muted', !playing);
+          toggleBtn.title = playing ? 'Now playing' : 'Now paused';
+        }
+
+        function tryAutoplay() {
+          const playPromise = music.play();
+          if (playPromise !== undefined) {
+            playPromise.then(() => {
+              setIcon(true);
+            }).catch(() => {
+              setIcon(false);
+              const resumeOnInteract = () => {
+                if (!userPaused) {
+                  music.play().then(() => setIcon(true)).catch(() => {});
+                }
+                document.removeEventListener('click', resumeOnInteract);
+                document.removeEventListener('keydown', resumeOnInteract);
+                document.removeEventListener('touchstart', resumeOnInteract);
+              };
+              document.addEventListener('click', resumeOnInteract);
+              document.addEventListener('keydown', resumeOnInteract);
+              document.addEventListener('touchstart', resumeOnInteract);
+            });
+          }
+        }
+
+        toggleBtn.addEventListener('click', () => {
+          if (music.paused) {
+            userPaused = false;
+            music.play().then(() => setIcon(true)).catch(() => {});
+          } else {
+            userPaused = true;
+            music.pause();
+            setIcon(false);
+          }
+        });
+
+        tryAutoplay();
       });
     </script>
