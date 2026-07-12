@@ -38,56 +38,56 @@
 
   <div class="progress-bar" id="progressBar"></div>
 
-    <div class="slide active" style="background-image:url('/image/Flins.png')">
+    <div class="slide active" data-href="/oathkeepers/flins.html" style="background-image:url('/image/Flins.png')">
     <div class="caption">
-      <h2 href="https://eavensx.github.io/oathkeepers/flins.html" style="background: -webkit-linear-gradient(#bfe6ff, #4d7fff); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">Kyryll Chudomirovich Flins</h2>
+      <h2 style="background: -webkit-linear-gradient(#bfe6ff, #4d7fff); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">Kyryll Chudomirovich Flins</h2>
       <p>Shadowy Lights, Stranger Wights</p>
     </div>
   </div>
   
-  <div class="slide" style="background-image:url('/image/Nicole.png')">
+  <div class="slide" data-href="/oathkeepers/nicole.html" style="background-image:url('/image/Nicole.png')">
     <div class="caption">
       <h2>Nicole</h2>
       <p>Clamor Within</p>
     </div>
   </div>
 
-  <div class="slide" style="background-image:url('/image/Skirk.png')">
+  <div class="slide" data-href="/oathkeepers/skirk.html" style="background-image:url('/image/Skirk.png')">
     <div class="caption">
       <h2>Skirk</h2>
       <p>Void Star</p>
     </div>
   </div>
 
-  <div class="slide" style="background-image:url('/image/Escoffier.png')">
+  <div class="slide" data-href="/oathkeepers/escoffier.html" style="background-image:url('/image/Escoffier.png')">
     <div class="caption">
       <h2>Escoffier</h2>
       <p>Tasteful Excellence</p>
     </div>
   </div>
 
-  <div class="slide" style="background-image:url('/image/Bina.png')">
+  <div class="slide" data-href="/oathkeepers/columbina.html" style="background-image:url('/image/Bina.png')">
     <div class="caption">
       <h2>Columbina</h2>
       <p>Welkin Moon's Homecoming</p>
     </div>
   </div>
 
-  <div class="slide" style="background-image:url('/image/Furina.png')">
+  <div class="slide" data-href="/oathkeepers/furina.html" style="background-image:url('/image/Furina.png')">
     <div class="caption">
       <h2>Furina</h2>
       <p>Endless Solo of Solitude</p>
     </div>
   </div>
 
-    <div class="slide" style="background-image:url('/image/Alhaitham.png')">
+    <div class="slide" data-href="/oathkeepers/alhaitham.html" style="background-image:url('/image/Alhaitham.png')">
     <div class="caption">
       <h2>Alhaitham</h2>
       <p>Admonishing Instruction</p>
     </div>
   </div>
 
-    <div class="slide" style="background-image:url('/image/Venti.png')">
+    <div class="slide" data-href="/oathkeepers/venti.html" style="background-image:url('/image/Venti.png')">
     <div class="caption">
       <h2>Venti</h2>
       <p>Windborne Bard</p>
@@ -98,6 +98,23 @@
   <button class="nav-btn next" id="nextBtn">&#10095;</button>
 
   <div class="dots" id="dots"></div>
+</div>
+
+<p>&nbsp;</p>
+
+<p>&nbsp;</p>
+
+<div class="oath-section">
+  <div class="oath-overlay"></div>
+  <div class="oath-content">
+    <p class="oath-line"><span class="oath-lead">Thus did I foresee —</span>waves crashing on the shore, the night sky devoured by deathly silence.</p>
+    <p class="oath-line"><span class="oath-lead">Thus did I declare —</span>whomsoever cradles the flame and keeps it burning unquenched need not descend into that darkness.</p>
+    <p class="oath-line"><span class="oath-lead">Thus did I vow —</span>our bones and blood we shall use as fuel, we shall make life greater than death.</p>
+    <p class="oath-line">The winds awaken, the leaves whirl round,<br>free your heart from dreams of the living.</p>
+    <p class="oath-line">Our cheeks are pale, our hair does flutter, our eyes burn bright as flame.</p>
+    <p class="oath-line">We shall part the snow-curtain of the sky, and blast the winter winds across the wasteland.</p>
+    <p class="oath-line">We are the Lightkeepers, who shine the eternal light of hope into the endless snow-swept plains.</p>
+  </div>
 </div>
 
 <p>&nbsp;</p>
@@ -430,6 +447,7 @@ html, body {
         background-size: contain;
         background-repeat: no-repeat;
         background-position: center;
+        cursor: pointer;
     }
 
     .slide.active {
@@ -499,6 +517,79 @@ html, body {
         width: 0%;
     }
 
+    .oath-section {
+        position: relative;
+        width: 100vw;
+        margin-left: calc(50% - 50vw);
+        min-height: 640px;
+        background-image: linear-gradient(rgba(8,12,32,0.35), rgba(8,12,32,0.55)), url('image/oathimage.png');
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        overflow: hidden;
+    }
+
+    .oath-overlay {
+        position: absolute;
+        top: 0; left: 0;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(180deg, rgba(8,12,32,0.15) 0%, rgba(8,12,32,0.1) 40%, rgba(8,12,32,0.55) 100%);
+        pointer-events: none;
+    }
+
+    .oath-content {
+        position: relative;
+        z-index: 2;
+        max-width: 780px;
+        padding: 60px 32px;
+        text-align: center;
+        font-family: 'EavenFont', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    .oath-line {
+        color: #e9eeff;
+        font-size: 1.15rem;
+        line-height: 1.8;
+        margin: 0 0 22px 0;
+        text-shadow: 0 2px 12px rgba(0,0,0,0.75);
+        font-style: italic;
+    }
+
+    .oath-line:last-child {
+        margin-bottom: 0;
+        font-style: normal;
+        font-weight: 600;
+        font-size: 1.25rem;
+        background: -webkit-linear-gradient(#bfe6ff, #4d7fff);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+    }
+
+    .oath-lead {
+        display: block;
+        color: #bfe6ff;
+        font-style: normal;
+        font-weight: 700;
+        letter-spacing: 0.5px;
+        margin-bottom: 4px;
+    }
+
+    @media (max-width: 700px) {
+        .oath-section {
+            min-height: 480px;
+        }
+        .oath-line {
+            font-size: 1rem;
+        }
+        .oath-line:last-child {
+            font-size: 1.1rem;
+        }
+    }
+
     </style>
 
     <script>
@@ -554,6 +645,13 @@ html, body {
 
         prevBtn.addEventListener('click', prevSlide);
         nextBtn.addEventListener('click', nextSlide);
+
+        slides.forEach(slide => {
+          slide.addEventListener('click', () => {
+            const href = slide.getAttribute('data-href');
+            if (href) window.location.href = href;
+          });
+        });
 
         slideshow.addEventListener('mouseenter', () => {
           clearInterval(timer);
