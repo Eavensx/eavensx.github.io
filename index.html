@@ -1,744 +1,1111 @@
-<html>
-<body style="background-color:#0d1330;">
-<title>Eaven</title>
+<!DOCTYPE html>
+<html lang="en">
 <head>
-<link rel="icon" type="image/x-icon" href="favicon.ico">
+<meta charset="utf-8">
+<script>
+  (function () {
+    var prefersDark = window.matchMedia &&
+      window.matchMedia('(prefers-color-scheme: dark)').matches;
+    document.documentElement.setAttribute('data-theme', prefersDark ? 'blue' : 'aurora');
+  })();
+</script>
 
-<div id="loadingScreen" class="loading-screen">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Eaven</title>
+<meta name="description" content="Eaven — the Oathkeepers, and the vow sworn against the endless snow.">
+<link rel="icon" type="image/x-icon" href="favicon-anemo.ico" id="favicon">
+<script>
+  (function () {
+    var isBlue = document.documentElement.getAttribute('data-theme') === 'blue';
+    if (isBlue) document.getElementById('favicon').setAttribute('href', 'favicon-electro.ico');
+  })();
+</script>
+
+<meta property="og:title" content="Eaven">
+<meta property="og:description" content="The Oathkeepers, and the vow sworn against the endless snow.">
+<meta property="og:image" content="/image/logo.png">
+<meta property="og:type" content="website">
+
+<style>
+
+@font-face {
+  font-family: 'EavenFont';
+  src: url('zh-cn.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+:root {
+    --frost:      #8ff0e6;     --aurora:     #40e0d0;     --mint:       #7fdeac;     --teal:       #1d9e93;     --teal-deep:  #0f4f4a;     --abyss:      #08191c;     --abyss-lift: #0c2327;   
+    --ink:        #e8fffb;     --ink-soft:   #a9c7c3;     --ink-mute:   #6f8c8a;   
+    --line-rgb:    29, 158, 147;     --accent-rgb:  64, 224, 208;     --mute-rgb:    111, 140, 138;    --overlay-rgb: 5, 21, 23;        --panel-rgb:   8, 28, 30;      
+    --step--1: clamp(0.82rem, 0.79rem + 0.15vw, 0.9rem);
+  --step-0:  clamp(1rem, 0.96rem + 0.2vw, 1.12rem);
+  --step-1:  clamp(1.25rem, 1.16rem + 0.42vw, 1.5rem);
+  --step-2:  clamp(1.56rem, 1.4rem + 0.8vw, 2.1rem);
+  --step-3:  clamp(1.95rem, 1.64rem + 1.5vw, 3rem);
+  --step-4:  clamp(2.6rem, 1.9rem + 3.4vw, 5.25rem);
+
+  --display: 'EavenFont', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  --body: 'EavenFont', 'Segoe UI', -apple-system, BlinkMacSystemFont, Arial, sans-serif;
+  --serif: 'Iowan Old Style', 'Palatino Linotype', Palatino, Georgia, serif;
+
+  --measure: 62ch;
+  --gutter: clamp(1.25rem, 5vw, 4rem);
+  --radius: 14px;
+  --ease: cubic-bezier(0.22, 0.68, 0.24, 1);
+  --topbar-img: url('/image/topbar-anemo.png');
+}
+
+:root[data-theme="blue"] {
+  --frost:      #bfe6ff;
+  --aurora:     #4d7fff;
+  --mint:       #4d7fff;
+  --teal:       #1c3aa8;
+  --teal-deep:  #16265e;
+  --abyss:      #0d1330;
+  --abyss-lift: #12193f;
+  --ink:        #e9eeff;
+  --ink-soft:   #a9a9ab;
+  --ink-mute:   #8a93b8;
+
+  --line-rgb:    28, 58, 168;      --accent-rgb:  77, 127, 255;     --mute-rgb:    138, 147, 184;    --overlay-rgb: 10, 15, 40;       --panel-rgb:   13, 19, 48;
+  --topbar-img: url('/image/topbar-electro.png');
+}
+
+[data-theme-content] { display: none !important; }
+html[data-theme="aurora"] [data-theme-content="aurora"],
+html[data-theme="blue"]   [data-theme-content="blue"] {
+  display: block !important;
+}
+html[data-theme="aurora"] .section-head [data-theme-content="aurora"],
+html[data-theme="blue"]   .section-head [data-theme-content="blue"] {
+  display: inline !important;
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  margin: 0;
+  background: var(--abyss);
+  color: var(--ink);
+  font-family: var(--body);
+  font-size: var(--step-0);
+  line-height: 1.65;
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+  transition: background-color 0.5s var(--ease);
+}
+
+.topbar, .hero, .roster, .gallery, .slide, .caption, .rail-item,
+.oath, .vow dt, .vow dd, .verse, .oath-title, .creed,
+.site-footer, .footer-mark, .hero-quote, .hero-cite, .nav-btn,
+.uid, .wordmark, .hero-title, .section-head h2, .section-head .count {
+  transition: background-color 0.5s var(--ease), color 0.5s var(--ease),
+              border-color 0.5s var(--ease), background 0.5s var(--ease);
+}
+
+body.loading { overflow: hidden; }
+
+img { max-width: 100%; display: block; }
+
+a {
+  color: var(--mint);
+  text-decoration: none;
+  transition: color 0.25s var(--ease);
+}
+a:hover { color: var(--aurora); }
+
+:focus-visible {
+  outline: 2px solid var(--aurora);
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+
+.skip-link {
+  position: absolute;
+  left: -9999px;
+  top: 0;
+  background: var(--aurora);
+  color: var(--abyss);
+  padding: 0.7rem 1.2rem;
+  z-index: 10000;
+  font-weight: 700;
+}
+.skip-link:focus { left: 0; }
+
+.shell {
+  width: min(1120px, 100% - var(--gutter) * 2);
+  margin-inline: auto;
+}
+
+.loading-screen {
+  position: fixed;
+  inset: 0;
+  background: var(--abyss);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+  transition: opacity 0.6s var(--ease), visibility 0.6s var(--ease);
+}
+.loading-screen.hidden {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+}
+
+.loader-spinner {
+  position: relative;
+  width: 84px;
+  height: 84px;
+  border-radius: 50%;
+  border: 2px solid rgba(var(--line-rgb), 0.22);
+  border-top-color: var(--aurora);
+  border-right-color: var(--mint);
+  animation: spin 0.9s linear infinite;
+}
+
+.loader-logo-img {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 44px;
+  height: 44px;
+  object-fit: contain;
+  transform: translate(-50%, -50%);
+  animation: spin-back 0.9s linear infinite;
+}
+
+@keyframes spin { to { transform: rotate(360deg); } }
+@keyframes spin-back {
+  from { transform: translate(-50%, -50%) rotate(0deg); }
+  to   { transform: translate(-50%, -50%) rotate(-360deg); }
+}
+
+.topbar {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 0.85rem var(--gutter);
+  background: linear-gradient(rgba(var(--overlay-rgb), 0.72), rgba(var(--overlay-rgb), 0.82)),
+              var(--topbar-img) center / cover;
+  border-bottom: 1px solid rgba(var(--line-rgb), 0.3);
+  backdrop-filter: blur(6px);
+}
+
+.wordmark {
+  font-family: var(--display);
+  font-size: var(--step-1);
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  background: linear-gradient(180deg, var(--frost), var(--mint));
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: var(--mint);
+}
+
+.topbar-right {
+  display: flex;
+  align-items: center;
+  gap: clamp(0.75rem, 2vw, 1.5rem);
+}
+
+.uid {
+  font-size: var(--step--1);
+  letter-spacing: 0.06em;
+  color: var(--ink-soft);
+  white-space: nowrap;
+}
+.uid b {
+  color: var(--frost);
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+}
+
+.music-toggle {
+  display: grid;
+  place-items: center;
+  width: 38px;
+  height: 38px;
+  flex: none;
+  border-radius: 50%;
+  border: 1px solid rgba(var(--accent-rgb), 0.45);
+  background: rgba(var(--panel-rgb), 0.6);
+  color: var(--aurora);
+  font-size: 0.95rem;
+  cursor: pointer;
+  transition: background 0.25s var(--ease), transform 0.2s var(--ease),
+              border-color 0.25s var(--ease);
+}
+.music-toggle:hover {
+  background: rgba(var(--accent-rgb), 0.22);
+  border-color: var(--aurora);
+  transform: scale(1.07);
+}
+.music-toggle.muted {
+  color: var(--ink-mute);
+  border-color: rgba(var(--mute-rgb), 0.35);
+}
+
+.theme-toggle {
+  display: inline-flex;
+  align-items: center;
+  padding: 0;
+  border: none;
+  background: none;
+  cursor: pointer;
+  flex: none;
+}
+
+.theme-toggle-track {
+  position: relative;
+  display: block;
+  width: 52px;
+  height: 28px;
+  border-radius: 999px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  background: linear-gradient(90deg, #1d9e93, #40e0d0 46%, #16265e 54%, #4d7fff);
+  transition: border-color 0.25s var(--ease);
+}
+.theme-toggle:hover .theme-toggle-track,
+.theme-toggle:focus-visible .theme-toggle-track {
+  border-color: rgba(255, 255, 255, 0.5);
+}
+.theme-toggle:focus-visible {
+  outline: 2px solid var(--aurora);
+  outline-offset: 3px;
+  border-radius: 999px;
+}
+
+.theme-toggle-thumb {
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background: #fff;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.45);
+  transition: left 0.3s var(--ease);
+}
+html[data-theme="blue"] .theme-toggle-thumb { left: 28px; }
+
+.hero {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  padding: clamp(3.5rem, 11vh, 7rem) 0 clamp(3rem, 9vh, 6rem);
+  background: linear-gradient(rgba(var(--overlay-rgb), 0.78), rgba(var(--overlay-rgb), 0.92)),
+              url('banner-anemo.png') center / cover;
+  transition: background-image 0.5s var(--ease);
+}
+
+html[data-theme="blue"] .hero {
+  background-image: linear-gradient(rgba(var(--overlay-rgb), 0.78), rgba(var(--overlay-rgb), 0.92)),
+                     url('banner-electro.png');
+}
+
+.hero::before,
+.hero::after {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  border-radius: 50%;
+  filter: blur(70px);
+  opacity: 0.4;
+  pointer-events: none;
+}
+.hero::before {
+  width: 48vw;
+  height: 26vw;
+  min-width: 320px;
+  top: -6%;
+  right: -8%;
+  background: radial-gradient(circle, var(--teal), transparent 68%);
+  animation: drift-a 19s ease-in-out infinite alternate;
+}
+.hero::after {
+  width: 38vw;
+  height: 22vw;
+  min-width: 260px;
+  bottom: -14%;
+  left: -6%;
+  background: radial-gradient(circle, var(--aurora), transparent 70%);
+  opacity: 0.22;
+  animation: drift-b 24s ease-in-out infinite alternate;
+}
+
+@keyframes drift-a {
+  from { transform: translate3d(0, 0, 0) scale(1); }
+  to   { transform: translate3d(-5%, 6%, 0) scale(1.14); }
+}
+@keyframes drift-b {
+  from { transform: translate3d(0, 0, 0) scale(1.08); }
+  to   { transform: translate3d(7%, -7%, 0) scale(1); }
+}
+
+.hero-inner {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: center;
+  gap: clamp(1.5rem, 5vw, 4rem);
+}
+
+.hero-title {
+  font-family: var(--display);
+  font-size: var(--step-4);
+  line-height: 0.95;
+  margin: 0 0 clamp(1.25rem, 3vh, 2rem);
+  letter-spacing: 0.02em;
+  background: linear-gradient(105deg, var(--teal) 0%, var(--aurora) 42%, var(--mint) 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: var(--mint);
+}
+
+.hero-quote {
+  max-width: var(--measure);
+  margin: 0;
+  padding-left: clamp(1rem, 2.5vw, 1.75rem);
+  border-left: 2px solid var(--teal-deep);
+  color: var(--ink-soft);
+  font-size: var(--step-0);
+  line-height: 1.85;
+}
+.hero-quote p { margin: 0; }
+
+.hero-quote .g1 { color: var(--mint); }
+.hero-quote .g2 { color: var(--aurora); }
+.hero-quote .g3 { color: var(--frost); }
+
+.hero-cite {
+  display: block;
+  margin-top: 1.4rem;
+  font-size: var(--step--1);
+  font-style: normal;
+  letter-spacing: 0.08em;
+  color: var(--ink-mute);
+}
+
+.hero-crest {
+  width: clamp(110px, 16vw, 190px);
+  filter: drop-shadow(0 0 26px rgba(var(--accent-rgb), 0.34));
+}
+
+.roster {
+  padding: clamp(3.5rem, 10vh, 6rem) 0;
+}
+
+.section-head {
+  display: flex;
+  align-items: baseline;
+  gap: 1rem;
+  margin-bottom: clamp(1.5rem, 4vh, 2.5rem);
+}
+
+.section-head h2 {
+  font-family: var(--display);
+  font-size: var(--step-2);
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  margin: 0;
+  color: var(--frost);
+}
+
+.section-head .rule {
+  flex: 1;
+  height: 1px;
+  background: linear-gradient(90deg, var(--teal), transparent);
+}
+
+.section-head .count {
+  font-size: var(--step--1);
+  color: var(--ink-mute);
+  font-variant-numeric: tabular-nums;
+}
+
+.gallery {
+  position: relative;
+  aspect-ratio: 16 / 9;
+  min-height: 320px;
+  border-radius: var(--radius);
+  overflow: hidden;
+  background: var(--abyss-lift);
+  border: 1px solid rgba(var(--line-rgb), 0.28);
+}
+
+.slide {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: flex-end;
+  opacity: 0;
+  visibility: hidden;
+  background-color: var(--abyss-lift);
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  cursor: pointer;
+  transition: opacity 0.7s var(--ease), visibility 0.7s var(--ease);
+}
+.slide.active { opacity: 1; visibility: visible; z-index: 1; }
+
+.caption {
+  width: 100%;
+  padding: clamp(1.25rem, 4vw, 2.25rem);
+  background: linear-gradient(transparent, rgba(var(--overlay-rgb), 0.94) 72%);
+}
+
+.caption h3 {
+  margin: 0 0 0.25rem;
+  font-family: var(--display);
+  font-size: var(--step-1);
+  font-weight: 700;
+  letter-spacing: 0.03em;
+  color: var(--frost);
+}
+
+.caption p {
+  margin: 0;
+  font-size: var(--step--1);
+  letter-spacing: 0.1em;
+  color: var(--mint);
+}
+
+.nav-btn {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  display: grid;
+  place-items: center;
+  width: 46px;
+  height: 46px;
+  border: 1px solid rgba(var(--accent-rgb), 0.3);
+  border-radius: 50%;
+  background: rgba(var(--panel-rgb), 0.62);
+  color: var(--frost);
+  font-size: 1.35rem;
+  line-height: 1;
+  cursor: pointer;
+  z-index: 3;
+  backdrop-filter: blur(5px);
+  transition: background 0.25s var(--ease), border-color 0.25s var(--ease);
+}
+.nav-btn:hover {
+  background: rgba(var(--accent-rgb), 0.3);
+  border-color: var(--aurora);
+}
+.prev { left: 14px; }
+.next { right: 14px; }
+
+.progress {
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  height: 3px;
+  width: 0%;
+  z-index: 4;
+  background: linear-gradient(90deg, var(--teal), var(--aurora), var(--mint));
+}
+
+.rail {
+  display: flex;
+  gap: 0.4rem;
+  margin-top: 1rem;
+  padding-bottom: 0.5rem;
+  overflow-x: auto;
+  scrollbar-width: thin;
+  scrollbar-color: var(--teal-deep) transparent;
+}
+.rail::-webkit-scrollbar { height: 4px; }
+.rail::-webkit-scrollbar-thumb {
+  background: var(--teal-deep);
+  border-radius: 4px;
+}
+
+.rail-item {
+  flex: none;
+  padding: 0.5rem 0.9rem;
+  border: 1px solid transparent;
+  border-top: 2px solid rgba(var(--line-rgb), 0.28);
+  border-radius: 0 0 8px 8px;
+  background: none;
+  color: var(--ink-mute);
+  font-family: var(--body);
+  font-size: var(--step--1);
+  letter-spacing: 0.05em;
+  white-space: nowrap;
+  cursor: pointer;
+  transition: color 0.25s var(--ease), border-color 0.25s var(--ease),
+              background 0.25s var(--ease);
+}
+.rail-item:hover {
+  color: var(--frost);
+  background: rgba(var(--line-rgb), 0.1);
+}
+.rail-item[aria-selected="true"] {
+  color: var(--abyss);
+  background: linear-gradient(180deg, var(--frost), var(--mint));
+  border-top-color: var(--aurora);
+  font-weight: 700;
+}
+
+.oath {
+  position: relative;
+  padding: clamp(4rem, 12vh, 7rem) 0;
+  background: linear-gradient(rgba(var(--overlay-rgb), 0.55), rgba(var(--overlay-rgb), 0.8)),
+              url('image/oathimage.png') center / cover no-repeat;
+  border-block: 1px solid rgba(var(--line-rgb), 0.25);
+}
+
+.oath-inner {
+  width: min(720px, 100% - var(--gutter) * 2);
+  margin-inline: auto;
+}
+
+.oath-title {
+  font-family: var(--display);
+  font-size: var(--step-2);
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  margin: 0 0 clamp(1.75rem, 5vh, 2.75rem);
+  background: linear-gradient(180deg, var(--frost), var(--mint));
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: var(--frost);
+}
+
+.vows {
+  margin: 0 0 2.5rem;
+  padding-left: clamp(1rem, 3vw, 2rem);
+  border-left: 1px solid var(--teal);
+}
+
+.vow { margin: 0 0 1.5rem; }
+.vow:last-child { margin-bottom: 0; }
+
+.vow dt {
+  font-size: var(--step--1);
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  color: var(--aurora);
+  margin-bottom: 0.3rem;
+}
+
+.vow dd {
+  margin: 0;
+  font-family: var(--serif);
+  font-size: var(--step-0);
+  font-style: italic;
+  line-height: 1.8;
+  color: var(--ink);
+}
+
+.verse {
+  font-family: var(--serif);
+  font-style: italic;
+  font-size: var(--step-0);
+  line-height: 1.9;
+  color: var(--ink-soft);
+  margin: 0 0 1.4rem;
+  text-shadow: 0 2px 14px rgba(0, 0, 0, 0.6);
+}
+
+.creed {
+  margin: 2.5rem 0 0;
+  font-family: var(--display);
+  font-size: var(--step-1);
+  font-weight: 600;
+  line-height: 1.55;
+  background: linear-gradient(100deg, var(--frost), var(--aurora) 50%, var(--mint));
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: var(--frost);
+}
+
+.oath-declaration {
+  margin: 0;
+  font-family: var(--serif);
+  font-style: italic;
+  font-size: var(--step-1);
+  line-height: 1.85;
+  color: var(--ink);
+  padding-left: clamp(1rem, 3vw, 2rem);
+  border-left: 1px solid var(--teal);
+}
+
+.site-footer {
+  padding: clamp(2.5rem, 7vh, 4rem) 0;
+  text-align: center;
+}
+
+.footer-mark {
+  font-family: var(--display);
+  font-size: var(--step-1);
+  letter-spacing: 0.2em;
+  color: var(--teal);
+  margin: 0 0 0.5rem;
+}
+
+.site-footer p {
+  margin: 0;
+  font-size: var(--step--1);
+  color: var(--ink-mute);
+}
+
+@media (max-width: 760px) {
+  .hero-inner {
+    grid-template-columns: 1fr;
+    text-align: left;
+  }
+  .hero-crest {
+    order: -1;
+    width: 92px;
+  }
+  .gallery { aspect-ratio: 4 / 5; }
+  .nav-btn { width: 40px; height: 40px; font-size: 1.15rem; }
+  .uid { display: none; }
+}
+
+@media (max-width: 420px) {
+  .prev { left: 8px; }
+  .next { right: 8px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+  html { scroll-behavior: auto; }
+}
+</style>
+</head>
+
+<body class="loading">
+
+<a class="skip-link" href="#main">Skip to content</a>
+
+<div id="loadingScreen" class="loading-screen" role="status" aria-label="Loading">
   <div class="loader-spinner">
-    <img src="/image/logo.png" alt="Eaven" class="loader-logo-img">
+    <img src="/image/logo.png" alt="" class="loader-logo-img">
   </div>
 </div>
 
-<div class="site-topbar">
-  <div class="site-logo">Eaven</div>
-  <div class="site-nav">
-    <a href="https://eavensx.github.io/">UID : 1819282435 (Asia)</a>
-    <button id="musicToggle" class="music-toggle" title="Turn off music" aria-label="Turn off or on music">&#128266;</button>
+<header class="topbar">
+  <a href="/" class="wordmark">Eaven</a>
+  <div class="topbar-right">
+    <span class="uid">UID <b>1819282435</b> · Asia</span>
+    <button id="themeToggle" class="theme-toggle" type="button" role="switch"
+            aria-checked="false" aria-label="Switch color theme"
+            title="Switch to Twilight palette">
+      <span class="theme-toggle-track">
+        <span class="theme-toggle-thumb"></span>
+      </span>
+    </button>
+    <button id="musicToggle" class="music-toggle" type="button"
+            title="Play music" aria-label="Play or pause background music">&#9654;</button>
   </div>
-</div>
-<audio id="bgMusic" src="bgmusic.mp3" loop preload="auto"></audio>
-<!--<p>&nbsp;</p>-->
-<div class="banner">
-  <div class="title">Eaven</div>
-  <div class="desc">Those who <span style="color: #4d7fff;">love</span> you will <span style="color: #4d7fff;">celebrate</span> your <span style="color: #4d7fff;">arrival</span> in this <span style="color: #4d7fff;">world</span> by preparing a <span style="color: #4d7fff;">feast</span>, singing <span style="color: #4d7fff;">songs</span>, and offering <span style="color: #4d7fff;">blessings</span>. When you <span style="color: #4d7fff;">pass away</span>, those who miss you will <span style="color: #4d7fff;">grieve</span> by holding a <span style="color: #4d7fff;">funeral</span> and lighting <span style="color: #4d7fff;">lanterns</span>. In <span style="color: #4d7fff;">life</span> and in <span style="color: #4d7fff;">death</span>, there will always be those who are moved by your <span style="color: #4d7fff;">existence</span>. So, take the <span style="color: #4d7fff;">chance</span>, while your <span style="color: #4d7fff;">soul</span> is full of <span style="color: #4d7fff;">life</span>, to come together with your <span style="color: #4d7fff;">loved</span> ones and be <span style="color: #4d7fff;">happy</span></strong>
-  <p style="font-size: 10px;">&nbsp;</p>
-  <a>— Kyryll Chudomirovich Flins</a></div>
-  <div class="icon no-invert"></div>
-  <div class="mini-title">
-    <div style="text-align: center;"></div>
+</header>
+
+<audio id="bgMusic" src="bgmusic1.mp3" loop preload="auto"></audio>
+
+<main id="main">
+
+  <section class="hero">
+    <div class="shell hero-inner">
+      <div>
+        <h1 class="hero-title">Eaven</h1>
+        <blockquote class="hero-quote">
+          <p data-theme-content="blue">
+            Those who <span class="g1">love</span> you will <span class="g2">celebrate</span>
+            your <span class="g3">arrival</span> in this <span class="g1">world</span> by preparing a
+            <span class="g2">feast</span>, singing <span class="g3">songs</span>, and offering
+            <span class="g1">blessings</span>. When you <span class="g2">pass away</span>, those who
+            miss you will <span class="g3">grieve</span> by holding a <span class="g1">funeral</span>
+            and lighting <span class="g2">lanterns</span>. In <span class="g3">life</span> and in
+            <span class="g1">death</span>, there will always be those who are moved by your
+            <span class="g2">existence</span>. So take the <span class="g3">chance</span>, while your
+            <span class="g1">soul</span> is full of <span class="g2">life</span>, to come together
+            with your <span class="g3">loved</span> ones and be <span class="g1">happy</span>.
+          </p>
+          <p data-theme-content="aurora">
+            To <span class="g1">live</span> an <span class="g2">honest</span> life you have to
+            <span class="g3">strive</span> hard, get <span class="g1">involved</span>,
+            <span class="g2">fight</span>, make <span class="g3">mistakes</span>, begin something and
+            give it up, begin again and <span class="g1">struggle</span> endlessly. For
+            <span class="g2">comfort</span> is spiritual <span class="g3">cowardice</span>.
+          </p>
+          <cite class="hero-cite" data-theme-content="blue">— Kyryll Chudomirovich Flins</cite>
+          <cite class="hero-cite" data-theme-content="aurora">— ???</cite>
+        </blockquote>
+      </div>
+      <img class="hero-crest" src="/image/logo.png" alt="Eaven crest">
     </div>
-  </div></head>
-<p>&nbsp;</p>
+  </section>
 
-<div class="slideshow-container" id="slideshow">
-  <div class="top-bar">
-    <div class="logo">Oathkeepers</div>
-  </div>
-
-  <div class="progress-bar" id="progressBar"></div>
-
-    <div class="slide active" data-href="/oathkeepers/flins.html" style="background-image:url('/image/Flins.png')">
-    <div class="caption">
-      <h2 style="background: -webkit-linear-gradient(#bfe6ff, #4d7fff); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">Kyryll Chudomirovich Flins</h2>
-      <p>Shadowy Lights, Stranger Wights</p>
+  <section id="roster" class="roster shell" aria-labelledby="roster-title">
+    <div class="section-head">
+      <h2 id="roster-title"><span data-theme-content="blue">Oathkeepers</span><span data-theme-content="aurora">Druzhinas</span></h2>
+      <span class="rule" aria-hidden="true"></span>
+      <span class="count" id="rosterCount"></span>
     </div>
-  </div>
-  
-  <div class="slide" data-href="/oathkeepers/nicole.html" style="background-image:url('/image/Nicole.png')">
-    <div class="caption">
-      <h2>Nicole</h2>
-      <p>Clamor Within</p>
+
+    <div class="gallery" id="gallery" aria-roledescription="carousel" aria-label="Oathkeepers">
+
+      <a class="slide active" href="/oathkeepers/flins.html"
+         style="background-image:url('/image/Flins.png')">
+        <div class="caption">
+          <h3 style="background: -webkit-linear-gradient(#bfe6ff, #4d7fff); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">Kyryll Chudomirovich Flins</h3>
+          <p>Shadowy Lights, Stranger Wights</p>
+        </div>
+      </a>
+
+      <a class="slide" href="/oathkeepers/vesna.html"
+         style="background-image:url('/image/Vesna.png')">
+        <div class="caption">
+          <h3>Vesna Strivosha</h3>
+          <p>Snowy Banquet's Sharp Blade</p>
+        </div>
+      </a>
+
+      <a class="slide" href="/oathkeepers/columbina.html"
+         style="background-image:url('/image/Bina.png')">
+        <div class="caption">
+          <h3>Columbina</h3>
+          <p>Welkin Moon's Homecoming</p>
+        </div>
+      </a>
+
+      <a class="slide" href="/oathkeepers/ineffa.html"
+         style="background-image:url('/image/Ineffa.png')">
+        <div class="caption">
+          <h3>Ineffa</h3>
+          <p>Boom Boom Thunderwave</p>
+        </div>
+      </a>
+
+      <a class="slide" href="/oathkeepers/odette.html"
+         style="background-image:url('/image/Odette.png')">
+        <div class="caption">
+          <h3>Odette</h3>
+          <p>Swirling Snow</p>
+        </div>
+      </a>
+
+      <a class="slide" href="/oathkeepers/nicole.html"
+         style="background-image:url('/image/Nicole.png')">
+        <div class="caption">
+          <h3>Nicole</h3>
+          <p>Clamor Within</p>
+        </div>
+      </a>
+
+      <a class="slide" href="/oathkeepers/skirk.html"
+         style="background-image:url('/image/Skirk.png')">
+        <div class="caption">
+          <h3>Skirk</h3>
+          <p>Void Star</p>
+        </div>
+      </a>
+
+      <a class="slide" href="/oathkeepers/escoffier.html"
+         style="background-image:url('/image/Escoffier.png')">
+        <div class="caption">
+          <h3>Escoffier</h3>
+          <p>Tasteful Excellence</p>
+        </div>
+      </a>
+
+      <a class="slide" href="/oathkeepers/furina.html"
+         style="background-image:url('/image/Furina.png')">
+        <div class="caption">
+          <h3>Furina</h3>
+          <p>Endless Solo of Solitude</p>
+        </div>
+      </a>
+
+      <a class="slide" href="/oathkeepers/alhaitham.html"
+         style="background-image:url('/image/Alhaitham.png')">
+        <div class="caption">
+          <h3>Alhaitham</h3>
+          <p>Admonishing Instruction</p>
+        </div>
+      </a>
+
+      <a class="slide" href="/oathkeepers/venti.html"
+         style="background-image:url('/image/Venti.png')">
+        <div class="caption">
+          <h3>Venti</h3>
+          <p>Windborne Bard</p>
+        </div>
+      </a>
+
+      <button class="nav-btn prev" id="prevBtn" type="button" aria-label="Previous">&#10094;</button>
+      <button class="nav-btn next" id="nextBtn" type="button" aria-label="Next">&#10095;</button>
+      <div class="progress" id="progressBar" aria-hidden="true"></div>
     </div>
-  </div>
 
-  <div class="slide" data-href="/oathkeepers/skirk.html" style="background-image:url('/image/Skirk.png')">
-    <div class="caption">
-      <h2>Skirk</h2>
-      <p>Void Star</p>
+    <div class="rail" id="rail" role="tablist" aria-label="Choose an Oathkeeper"></div>
+  </section>
+
+  <section class="oath" aria-labelledby="oath-title" hidden>
+    <div class="oath-inner">
+      <h2 id="oath-title" class="oath-title">The Oath</h2>
+
+      <div data-theme-content="blue">
+        <dl class="vows">
+          <div class="vow">
+            <dt>Thus did I foresee</dt>
+            <dd>Waves crashing on the shore, the night sky devoured by deathly silence.</dd>
+          </div>
+          <div class="vow">
+            <dt>Thus did I declare</dt>
+            <dd>Whomsoever cradles the flame and keeps it burning unquenched need not descend into that darkness.</dd>
+          </div>
+          <div class="vow">
+            <dt>Thus did I vow</dt>
+            <dd>Our bones and blood we shall use as fuel, we shall make life greater than death.</dd>
+          </div>
+        </dl>
+
+        <p class="verse">
+          The winds awaken, the leaves whirl round,<br>
+          free your heart from dreams of the living.
+        </p>
+        <p class="verse">
+          Our cheeks are pale, our hair does flutter,<br>
+          our eyes burn bright as flame.
+        </p>
+        <p class="verse">
+          We shall part the snow-curtain of the sky,<br>
+          and blast the winter winds across the wasteland.
+        </p>
+
+        <p class="creed">
+          We are the Lightkeepers, who shine the eternal light of hope
+          into the endless snow-swept plains.
+        </p>
+      </div>
+
+      <div data-theme-content="aurora">
+        <p class="oath-declaration">
+          We swear under this sacred tree absolute solidarity and lifelong
+          allegiance to the rebirth of our nation, to defend our language,
+          and to protect the freedom of all Slavic peoples.
+        </p>
+      </div>
     </div>
-  </div>
+  </section>
 
-  <div class="slide" data-href="/oathkeepers/escoffier.html" style="background-image:url('/image/Escoffier.png')">
-    <div class="caption">
-      <h2>Escoffier</h2>
-      <p>Tasteful Excellence</p>
-    </div>
-  </div>
+</main>
 
-  <div class="slide" data-href="/oathkeepers/columbina.html" style="background-image:url('/image/Bina.png')">
-    <div class="caption">
-      <h2>Columbina</h2>
-      <p>Welkin Moon's Homecoming</p>
-    </div>
-  </div>
+<footer class="site-footer">
+  <p class="footer-mark">EAVEN</p>
+  <p>UID 1819282435 · Asia</p>
+</footer>
 
-  <div class="slide" data-href="/oathkeepers/furina.html" style="background-image:url('/image/Furina.png')">
-    <div class="caption">
-      <h2>Furina</h2>
-      <p>Endless Solo of Solitude</p>
-    </div>
-  </div>
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+  const slides = Array.from(document.querySelectorAll('.slide'));
+  const rail = document.getElementById('rail');
+  const progressBar = document.getElementById('progressBar');
+  const gallery = document.getElementById('gallery');
+  const prevBtn = document.getElementById('prevBtn');
+  const nextBtn = document.getElementById('nextBtn');
+  const countEl = document.getElementById('rosterCount');
 
-    <div class="slide" data-href="/oathkeepers/alhaitham.html" style="background-image:url('/image/Alhaitham.png')">
-    <div class="caption">
-      <h2>Alhaitham</h2>
-      <p>Admonishing Instruction</p>
-    </div>
-  </div>
+  if (!slides.length) return;
 
-    <div class="slide" data-href="/oathkeepers/venti.html" style="background-image:url('/image/Venti.png')">
-    <div class="caption">
-      <h2>Venti</h2>
-      <p>Windborne Bard</p>
-    </div>
-  </div>
-  
-  <button class="nav-btn prev" id="prevBtn">&#10094;</button>
-  <button class="nav-btn next" id="nextBtn">&#10095;</button>
+  const INTERVAL = 5000;
+  let current = 0;
+  let timer, progressTimer;
 
-  <div class="dots" id="dots"></div>
-</div>
+  const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-<p>&nbsp;</p>
+  if (countEl) countEl.textContent = String(slides.length).padStart(2, '0');
 
-<p>&nbsp;</p>
+  slides.forEach((slide, i) => {
+    const name = slide.querySelector('h3').textContent.trim();
+    const btn = document.createElement('button');
+    btn.type = 'button';
+    btn.className = 'rail-item';
+    btn.setAttribute('role', 'tab');
+    btn.setAttribute('aria-selected', i === 0 ? 'true' : 'false');
+    const words = name.split(' ');
+    btn.textContent = words.length > 2 ? words[words.length - 1]
+                     : words.length === 2 ? words[0]
+                     : name;
+    btn.title = name;
+    btn.addEventListener('click', () => show(i));
+    rail.appendChild(btn);
+  });
 
-<div class="oath-section">
-  <div class="oath-overlay"></div>
-  <div class="oath-content">
-    <p class="oath-line"><span class="oath-lead">Thus did I foresee —</span>waves crashing on the shore, the night sky devoured by deathly silence.</p>
-    <p class="oath-line"><span class="oath-lead">Thus did I declare —</span>whomsoever cradles the flame and keeps it burning unquenched need not descend into that darkness.</p>
-    <p class="oath-line"><span class="oath-lead">Thus did I vow —</span>our bones and blood we shall use as fuel, we shall make life greater than death.</p>
-    <p class="oath-line">The winds awaken, the leaves whirl round,<br>free your heart from dreams of the living.</p>
-    <p class="oath-line">Our cheeks are pale, our hair does flutter, our eyes burn bright as flame.</p>
-    <p class="oath-line">We shall part the snow-curtain of the sky, and blast the winter winds across the wasteland.</p>
-    <p class="oath-line">We are the Lightkeepers, who shine the eternal light of hope into the endless snow-swept plains.</p>
-  </div>
-</div>
+  const railItems = Array.from(rail.children);
 
-<p>&nbsp;</p>
-<!--<h6>Eaven</h6>  <p class="uid">UID : 1819282435 (Asia)</p>-->
+  function show(index) {
+    current = (index + slides.length) % slides.length;
+    slides.forEach((s, i) => s.classList.toggle('active', i === current));
+    railItems.forEach((d, i) =>
+      d.setAttribute('aria-selected', i === current ? 'true' : 'false'));
+    railItems[current].scrollIntoView({
+      behavior: reduceMotion ? 'auto' : 'smooth',
+      block: 'nearest',
+      inline: 'nearest'
+    });
+    restart();
+  }
+
+  const next = () => show(current + 1);
+  const prev = () => show(current - 1);
+
+  function stop() {
+    clearInterval(timer);
+    clearInterval(progressTimer);
+  }
+
+  function restart() {
+    stop();
+    progressBar.style.width = '0%';
+    if (reduceMotion) return;
+    let w = 0;
+    progressTimer = setInterval(() => {
+      w++;
+      progressBar.style.width = w + '%';
+    }, INTERVAL / 100);
+    timer = setInterval(next, INTERVAL);
+  }
+
+  nextBtn.addEventListener('click', next);
+  prevBtn.addEventListener('click', prev);
+
+  gallery.addEventListener('mouseenter', stop);
+  gallery.addEventListener('mouseleave', restart);
+  gallery.addEventListener('focusin', stop);
+
+  let startX = 0, startY = 0;
+  gallery.addEventListener('touchstart', e => {
+    startX = e.touches[0].clientX;
+    startY = e.touches[0].clientY;
+  }, { passive: true });
+
+  gallery.addEventListener('touchend', e => {
+    const dx = e.changedTouches[0].clientX - startX;
+    const dy = e.changedTouches[0].clientY - startY;
+    if (Math.abs(dx) > 50 && Math.abs(dx) > Math.abs(dy)) {
+      dx > 0 ? prev() : next();
+    }
+  });
+
+  document.addEventListener('keydown', e => {
+    if (e.key !== 'ArrowLeft' && e.key !== 'ArrowRight') return;
+    const box = gallery.getBoundingClientRect();
+    if (box.bottom < 0 || box.top > window.innerHeight) return;
+    e.key === 'ArrowRight' ? next() : prev();
+  });
+
+  restart();
+});
+
+document.addEventListener('DOMContentLoaded', () => {
+  const music = document.getElementById('bgMusic');
+  const btn = document.getElementById('musicToggle');
+  let userPaused = false;
+
+  function setIcon(playing) {
+    btn.innerHTML = playing ? '&#9208;' : '&#9654;';
+    btn.classList.toggle('muted', !playing);
+    btn.title = playing ? 'Pause music' : 'Play music';
+  }
+
+  btn.addEventListener('click', () => {
+    if (music.paused) {
+      userPaused = false;
+      music.play().then(() => setIcon(true)).catch(() => {});
+    } else {
+      userPaused = true;
+      music.pause();
+      setIcon(false);
+    }
+  });
+
+  const playPromise = music.play();
+  if (playPromise !== undefined) {
+    playPromise.then(() => setIcon(true)).catch(() => {
+      setIcon(false);
+      const resume = () => {
+        if (!userPaused) music.play().then(() => setIcon(true)).catch(() => {});
+        ['click', 'keydown', 'touchstart'].forEach(ev =>
+          document.removeEventListener(ev, resume));
+      };
+      ['click', 'keydown', 'touchstart'].forEach(ev =>
+        document.addEventListener(ev, resume, { once: true }));
+    });
+  }
+});
+
+(function () {
+  function hide() {
+    const loader = document.getElementById('loadingScreen');
+    if (!loader) return;
+    loader.classList.add('hidden');
+    document.body.classList.remove('loading');
+    setTimeout(() => loader.remove(), 700);
+  }
+  window.addEventListener('load', () => setTimeout(hide, 400));
+  setTimeout(hide, 6000);
+})();
+
+document.addEventListener('DOMContentLoaded', () => {
+  const html = document.documentElement;
+  const toggle = document.getElementById('themeToggle');
+  const music = document.getElementById('bgMusic');
+  if (!toggle) return;
+
+  const TRACK = { aurora: 'bgmusic1.mp3', blue: 'bgmusic2.mp3' };
+  const FAVICON = { aurora: 'favicon-anemo.ico', blue: 'favicon-electro.ico' };
+  const favicon = document.getElementById('favicon');
+
+  function apply(theme) {
+    html.setAttribute('data-theme', theme);
+    toggle.setAttribute('aria-checked', theme === 'blue' ? 'true' : 'false');
+    toggle.title = theme === 'blue' ? 'Switch to Aurora palette' : 'Switch to Twilight palette';
+    if (music) {
+      const track = TRACK[theme];
+      if (music.getAttribute('src') !== track) {
+        const wasPlaying = !music.paused;
+        music.setAttribute('src', track);
+        if (wasPlaying) music.play().catch(() => {});
+      }
+    }
+    if (favicon) {
+      const icon = FAVICON[theme];
+      if (favicon.getAttribute('href') !== icon) {
+        favicon.setAttribute('href', icon);
+      }
+    }
+  }
+
+  apply(html.getAttribute('data-theme') === 'blue' ? 'blue' : 'aurora');
+
+  toggle.addEventListener('click', () => {
+    apply(html.getAttribute('data-theme') === 'blue' ? 'aurora' : 'blue');
+  });
+});
+</script>
 
 </body>
 </html>
-<style>
-    .uid {
-      position: absolute;
-      text-align: right;
-      color: white;
-      right: 8%;
-    }
-    h6 {
-        font-family: 'EavenFont', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        position: relative;
-        text-align: center;
-        left: -39%;
-        bottom: -15.5%;
-        color:#4d7fff;
-        font-size:30px;
-        font-weight: 1px;
-    }
-    h5{
-        font-family: 'EavenFont', Arial, Helvetica, sans-serif;
-        color:#4d7fff;
-        text-align: right;
-        position: relative;
-        left: -5%;
-        font-weight: lighter;
-        word-spacing: 20px;
-        font-size: 20px;
-    }
-    footer{
-        font-family: 'EavenFont', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        font-size: 15px;
-        text-align: center;
-        position: relative;
-    }
-    a {
-  color: #4d7fff;
-  background-color: transparent;
-  text-decoration: none;
-    }
-    a:hover {
-  color: #bfe6ff;
-  background-color: transparent;
-  text-decoration: bold;
-    }
-    .banner {
-        display: flex;
-        flex-wrap: wrap;
-        justify-content: space-around;
-        position:relative;
-        height: 465px;
-        width: 100%;
-        background-color: #0d1330;
-        background-image: linear-gradient(rgba(10,15,40,0.75), rgba(10,15,40,0.88)), url('banner-bg.png');
-        background-size: cover;
-        background-position: center;
-        border-radius: 5px;
-        overflow: hidden;
-    }
-
-    .banner:before {
-        content: "";
-        position:absolute;
-        height: 300px;
-        width: 300px;
-        border-radius: 50%;
-        top: 30px;
-        right: -50px;
-        background: #16265e;
-        transform: scale(1);
-        transform-origin: 50% 50%;
-        transition: all 0.5s ease-in-out;
-    }
-
-    .banner .title {
-        color: #0f1c52;
-        font-size: 60px;
-        font-weight: bold;
-        font-family: 'EavenFont', Segoe UI, -apple-system, BlinkMacSystemFont, Arial, sans-serif;
-        position: absolute;
-        background: -webkit-linear-gradient(#1c3aa8,#4d7fff);
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
-        top: 10%;
-        left: 25px;
-        transform: scale(1);
-        transition: all 0.5s ease-in-out;
-    }
-
-    .banner .desc {
-        color: #a9a9ab;
-        font-size: 20px;
-        font-family: 'EavenFont', Segoe UI, -apple-system, BlinkMacSystemFont, Arial, sans-serif;
-        position: absolute;
-        top: 30%;
-        left: 25px;
-        max-width: 60%;
-        transform: scale(1);
-        transition: all 0.5s ease-in-out;
-    }
-
-    .banner .icon {
-        position: absolute;
-        width: 200px;
-        height: 200px;
-        top: 80px;
-        right: 0%;
-        background-image:
-            url(/image/logo.png);
-        background-repeat: no-repeat;
-        background-position: center;
-        background-size: 100%;
-        transform: scale(1);
-        transition: all 0.25s ease-in-out;
-        transition-delay: 0.2s;
-    }
-
-    .banner .mini-title {
-        position: absolute;
-        font-size: 24px;
-        font-family: 'EavenFont', Segoe UI, -apple-system, BlinkMacSystemFont, Arial, sans-serif;
-        margin-top: 35px;
-        text-align: center;
-        font-weight: 400;
-        color: transparent;
-        transition: all 0.3s ease-in-out;
-        
-    }
-    
-        .banner .create {
-        position: absolute;
-        margin-top: 300px;
-        color: transparent;
-        transition: all 0.3s ease-in-out;
-        
-    }
-
-    .title1 {
-        font-family: 'EavenFont', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        font-size:50px;
-        color:#4d7fff;
-        text-align: center;
-    }
-
-    .loading-screen {
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background: #0d1330;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-        z-index: 9999;
-        transition: opacity 0.6s ease, visibility 0.6s ease;
-    }
-
-    .loading-screen.hidden {
-        opacity: 0;
-        visibility: hidden;
-        pointer-events: none;
-    }
-
-    .loader-logo-img {
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        width: 46px;
-        height: 46px;
-        object-fit: contain;
-        animation: loader-spin-reverse 0.9s linear infinite;
-    }
-
-    @keyframes loader-spin-reverse {
-        from { transform: translate(-50%, -50%) rotate(0deg); }
-        to { transform: translate(-50%, -50%) rotate(-360deg); }
-    }
-
-    .loader-spinner {
-        position: relative;
-        width: 84px;
-        height: 84px;
-        border-radius: 50%;
-        border: 3px solid rgba(77,127,255,0.2);
-        border-top-color: #4d7fff;
-        animation: loader-spin 0.9s linear infinite;
-    }
-
-    @keyframes loader-spin {
-        to { transform: rotate(360deg); }
-    }
-
-    body.loading {
-        overflow: hidden;
-    }
-
-    .site-topbar {
-        position: sticky;
-        top: 0;
-        left: 0;
-        width: 95%;
-        height: 60px;
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        padding: 0 32px;
-        background: linear-gradient(rgba(10,14,38,0.55), rgba(10,14,38,0.65)), url('/image/topbar_banner.png');
-        background-size: cover;
-        background-position: center;
-        box-shadow: 0 2px 12px rgba(0,0,0,0.5);
-        z-index: 10;
-    }
-
-    .music-toggle {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        width: 34px;
-        height: 34px;
-        border-radius: 50%;
-        border: 1px solid rgba(191,230,255,0.4);
-        background: rgba(13,19,48,0.55);
-        color: #bfe6ff;
-        font-size: 1.05rem;
-        cursor: pointer;
-        transition: background 0.3s, transform 0.2s;
-    }
-    .music-toggle:hover {
-        background: rgba(77,127,255,0.45);
-        transform: scale(1.08);
-    }
-    .music-toggle.muted {
-        color: #8a93b8;
-    }
-
-    .site-topbar .site-logo {
-        font-family: 'EavenFont', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        font-size: 1.4rem;
-        font-weight: 700;
-        letter-spacing: 2px;
-        background: -webkit-linear-gradient(#bfe6ff, #4d7fff);
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
-    }
-
-    .site-topbar .site-nav {
-        display: flex;
-        gap: 28px;
-    }
-
-    .site-topbar .site-nav a {
-        font-family: 'EavenFont', Arial, Helvetica, sans-serif;
-        font-size: 0.95rem;
-        letter-spacing: 1px;
-        color: #cfe3ff;
-    }
-
-    .site-topbar .site-nav a:hover {
-        color: #bfe6ff;
-    }
-
-@font-face {
-    font-family: 'Hywenhei';
-    src: url(Hywenhei.tff)
-}
-
-@font-face {
-    font-family: 'EavenFont';
-    src: url('zh-cn.ttf') format('truetype');
-    font-weight: normal;
-    font-style: normal;
-}
-
-html, body {
-    font-family: 'EavenFont', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-}
-
-    .slideshow-container {
-        position: relative;
-        width: 900px;
-        max-width: 90vw;
-        height: 500px;
-        margin: 0 auto;
-        border-radius: 16px;
-        overflow: hidden;
-        box-shadow: 0 20px 50px rgba(0,0,0,0.5);
-    }
-
-    .top-bar {
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 56px;
-        background: linear-gradient(90deg, #1c3aa8, #4d7fff, #16265e);
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        z-index: 4;
-        box-shadow: 0 2px 10px rgba(0,0,0,0.35);
-    }
-
-    .top-bar .logo {
-        color: #fff;
-        font-size: 1.4rem;
-        font-weight: 700;
-        letter-spacing: 2px;
-        font-family: 'EavenFont', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    }
-
-    .slide {
-        position: absolute;
-        top: 0; left: 0;
-        width: 100%;
-        height: 100%;
-        opacity: 0;
-        transition: opacity 0.8s ease-in-out;
-        display: flex;
-        align-items: flex-end;
-        color: white;
-        background-color: #0d1330;
-        background-size: contain;
-        background-repeat: no-repeat;
-        background-position: center;
-        cursor: pointer;
-    }
-
-    .slide.active {
-        opacity: 1;
-        z-index: 1;
-    }
-
-    .caption {
-        background: linear-gradient(transparent, rgba(27,25,43,0.9));
-        width: 100%;
-        padding: 24px;
-        font-family: 'EavenFont', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    }
-
-    .caption h2 { font-size: 1.5rem; margin-bottom: 6px; color: #fff; }
-    .caption p { font-size: 0.95rem; opacity: 0.85; margin: 0; }
-
-    .nav-btn {
-        position: absolute;
-        top: 50%;
-        transform: translateY(-50%);
-        background: rgba(89,7,166,0.35);
-        border: none;
-        color: white;
-        font-size: 1.8rem;
-        width: 46px;
-        height: 46px;
-        border-radius: 50%;
-        cursor: pointer;
-        z-index: 2;
-        backdrop-filter: blur(4px);
-        transition: background 0.3s;
-    }
-    .nav-btn:hover { background: rgba(138,43,226,0.55); }
-    .prev { left: 16px; }
-    .next { right: 16px; }
-
-    .dots {
-        position: absolute;
-        bottom: 50px;
-        left: 50%;
-        transform: translateX(-50%);
-        display: flex;
-        gap: 8px;
-        z-index: 2;
-    }
-
-    .dot {
-        width: 10px;
-        height: 10px;
-        border-radius: 50%;
-        background: rgba(255,255,255,0.35);
-        cursor: pointer;
-        transition: background 0.3s, transform 0.3s;
-    }
-    .dot.active {
-        background: #4d7fff;
-        transform: scale(1.3);
-    }
-
-    .progress-bar {
-        position: absolute;
-        bottom: 0; left: 0;
-        height: 4px;
-        background: #4d7fff;
-        z-index: 3;
-        width: 0%;
-    }
-
-    .oath-section {
-        position: relative;
-        width: 100vw;
-        margin-left: calc(50% - 50vw);
-        min-height: 640px;
-        background-image: linear-gradient(rgba(8,12,32,0.35), rgba(8,12,32,0.55)), url('image/oathimage.png');
-        background-size: cover;
-        background-position: center;
-        background-repeat: no-repeat;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        overflow: hidden;
-    }
-
-    .oath-overlay {
-        position: absolute;
-        top: 0; left: 0;
-        width: 100%;
-        height: 100%;
-        background: linear-gradient(180deg, rgba(8,12,32,0.15) 0%, rgba(8,12,32,0.1) 40%, rgba(8,12,32,0.55) 100%);
-        pointer-events: none;
-    }
-
-    .oath-content {
-        position: relative;
-        z-index: 2;
-        max-width: 780px;
-        padding: 60px 32px;
-        text-align: center;
-        font-family: 'EavenFont', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    }
-
-    .oath-line {
-        color: #e9eeff;
-        font-size: 1.15rem;
-        line-height: 1.8;
-        margin: 0 0 22px 0;
-        text-shadow: 0 2px 12px rgba(0,0,0,0.75);
-        font-style: italic;
-    }
-
-    .oath-line:last-child {
-        margin-bottom: 0;
-        font-style: normal;
-        font-weight: 600;
-        font-size: 1.25rem;
-        background: -webkit-linear-gradient(#bfe6ff, #4d7fff);
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
-    }
-
-    .oath-lead {
-        display: block;
-        color: #bfe6ff;
-        font-style: normal;
-        font-weight: 700;
-        letter-spacing: 0.5px;
-        margin-bottom: 4px;
-    }
-
-    @media (max-width: 700px) {
-        .oath-section {
-            min-height: 480px;
-        }
-        .oath-line {
-            font-size: 1rem;
-        }
-        .oath-line:last-child {
-            font-size: 1.1rem;
-        }
-    }
-
-    </style>
-
-    <script>
-      document.addEventListener('DOMContentLoaded', () => {
-        const slides = document.querySelectorAll('.slide');
-        const dotsContainer = document.getElementById('dots');
-        const progressBar = document.getElementById('progressBar');
-        const prevBtn = document.getElementById('prevBtn');
-        const nextBtn = document.getElementById('nextBtn');
-        const slideshow = document.getElementById('slideshow');
-
-        if (!slides.length) return;
-
-        let currentIndex = 0;
-        const intervalTime = 4000;
-        let timer;
-        let progressTimer;
-
-        slides.forEach((_, i) => {
-          const dot = document.createElement('div');
-          dot.classList.add('dot');
-          if (i === 0) dot.classList.add('active');
-          dot.addEventListener('click', () => goToSlide(i));
-          dotsContainer.appendChild(dot);
-        });
-        const dots = document.querySelectorAll('.dot');
-
-        function showSlide(index) {
-          slides.forEach(s => s.classList.remove('active'));
-          dots.forEach(d => d.classList.remove('active'));
-          currentIndex = (index + slides.length) % slides.length;
-          slides[currentIndex].classList.add('active');
-          dots[currentIndex].classList.add('active');
-          restartProgress();
-        }
-
-        function nextSlide() { showSlide(currentIndex + 1); }
-        function prevSlide() { showSlide(currentIndex - 1); }
-        function goToSlide(i) { showSlide(i); }
-
-        function restartProgress() {
-          clearInterval(timer);
-          clearInterval(progressTimer);
-          progressBar.style.width = '0%';
-          let width = 0;
-          const stepTime = intervalTime / 100;
-          progressTimer = setInterval(() => {
-            width++;
-            progressBar.style.width = width + '%';
-          }, stepTime);
-          timer = setInterval(nextSlide, intervalTime);
-        }
-
-        prevBtn.addEventListener('click', prevSlide);
-        nextBtn.addEventListener('click', nextSlide);
-
-        slides.forEach(slide => {
-          slide.addEventListener('click', () => {
-            const href = slide.getAttribute('data-href');
-            if (href) window.location.href = href;
-          });
-        });
-
-        slideshow.addEventListener('mouseenter', () => {
-          clearInterval(timer);
-          clearInterval(progressTimer);
-        });
-        slideshow.addEventListener('mouseleave', restartProgress);
-
-        let touchStartX = 0;
-        slideshow.addEventListener('touchstart', e => touchStartX = e.touches[0].clientX);
-        slideshow.addEventListener('touchend', e => {
-          const diff = e.changedTouches[0].clientX - touchStartX;
-          if (diff > 50) prevSlide();
-          else if (diff < -50) nextSlide();
-        });
-
-        document.addEventListener('keydown', e => {
-          if (e.key === 'ArrowRight') nextSlide();
-          if (e.key === 'ArrowLeft') prevSlide();
-        });
-
-        restartProgress();
-      });
-    </script>
-
-    <script>
-      document.addEventListener('DOMContentLoaded', () => {
-        const music = document.getElementById('bgMusic');
-        const toggleBtn = document.getElementById('musicToggle');
-        let userPaused = false;
-
-        function setIcon(playing) {
-          toggleBtn.innerHTML = playing ? '&#9208;' : '&#9654;';
-          toggleBtn.classList.toggle('muted', !playing);
-          toggleBtn.title = playing ? 'Now playing' : 'Now paused';
-        }
-
-        function tryAutoplay() {
-          const playPromise = music.play();
-          if (playPromise !== undefined) {
-            playPromise.then(() => {
-              setIcon(true);
-            }).catch(() => {
-              setIcon(false);
-              const resumeOnInteract = () => {
-                if (!userPaused) {
-                  music.play().then(() => setIcon(true)).catch(() => {});
-                }
-                document.removeEventListener('click', resumeOnInteract);
-                document.removeEventListener('keydown', resumeOnInteract);
-                document.removeEventListener('touchstart', resumeOnInteract);
-              };
-              document.addEventListener('click', resumeOnInteract);
-              document.addEventListener('keydown', resumeOnInteract);
-              document.addEventListener('touchstart', resumeOnInteract);
-            });
-          }
-        }
-
-        toggleBtn.addEventListener('click', () => {
-          if (music.paused) {
-            userPaused = false;
-            music.play().then(() => setIcon(true)).catch(() => {});
-          } else {
-            userPaused = true;
-            music.pause();
-            setIcon(false);
-          }
-        });
-
-        tryAutoplay();
-      });
-    </script>
-
-    <script>
-      document.body.classList.add('loading');
-
-      function hideLoadingScreen() {
-        const loader = document.getElementById('loadingScreen');
-        if (!loader) return;
-        loader.classList.add('hidden');
-        document.body.classList.remove('loading');
-        setTimeout(() => loader.remove(), 700);
-      }
-
-      window.addEventListener('load', () => {
-        setTimeout(hideLoadingScreen, 400);
-      });
-
-      setTimeout(hideLoadingScreen, 6000);
-    </script>
