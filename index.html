@@ -20,6 +20,13 @@
     if (isBlue) document.getElementById('favicon').setAttribute('href', 'favicon-electro.ico');
   })();
 </script>
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    var isBlue = document.documentElement.getAttribute('data-theme') === 'blue';
+    var crest = document.getElementById('heroCrest');
+    if (crest && isBlue) crest.setAttribute('src', '/image/logo-electro.png');
+  });
+</script>
 
 <meta property="og:title" content="Eaven">
 <meta property="og:description" content="The Oathkeepers, and the vow sworn against the endless snow.">
@@ -753,7 +760,7 @@ html[data-theme="blue"] .hero {
           <cite class="hero-cite" data-theme-content="aurora">— ???</cite>
         </blockquote>
       </div>
-      <img class="hero-crest" src="/image/logo.png" alt="Eaven crest">
+      <img class="hero-crest" id="heroCrest" src="/image/logo-anemo.png" alt="Eaven crest">
     </div>
   </section>
 
@@ -961,11 +968,6 @@ document.addEventListener('DOMContentLoaded', () => {
     slides.forEach((s, i) => s.classList.toggle('active', i === current));
     railItems.forEach((d, i) =>
       d.setAttribute('aria-selected', i === current ? 'true' : 'false'));
-    railItems[current].scrollIntoView({
-      behavior: reduceMotion ? 'auto' : 'smooth',
-      block: 'nearest',
-      inline: 'nearest'
-    });
     restart();
   }
 
@@ -1077,7 +1079,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
   const TRACK = { aurora: 'bgmusic1.mp3', blue: 'bgmusic2.mp3' };
   const FAVICON = { aurora: 'favicon-anemo.ico', blue: 'favicon-electro.ico' };
+  const CREST = { aurora: '/image/logo-anemo.png', blue: '/image/logo-electro.png' };
   const favicon = document.getElementById('favicon');
+  const crest = document.getElementById('heroCrest');
 
   function apply(theme) {
     html.setAttribute('data-theme', theme);
@@ -1095,6 +1099,12 @@ document.addEventListener('DOMContentLoaded', () => {
       const icon = FAVICON[theme];
       if (favicon.getAttribute('href') !== icon) {
         favicon.setAttribute('href', icon);
+      }
+    }
+    if (crest) {
+      const img = CREST[theme];
+      if (crest.getAttribute('src') !== img) {
+        crest.setAttribute('src', img);
       }
     }
   }
