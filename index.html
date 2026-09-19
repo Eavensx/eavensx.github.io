@@ -33,7 +33,7 @@
 :root {
     --frost:      #8ff0e6;     --aurora:     #40e0d0;     --mint:       #7fdeac;     --teal:       #1d9e93;     --teal-deep:  #0f4f4a;     --abyss:      #fff;     --abyss-lift: #f4f7f6;   
     --ink:        #0d2723;     --ink-soft:   #3c5a55;     --ink-mute:   #63817b;   
-    --line-rgb:    29, 158, 147;     --accent-rgb:  64, 224, 208;     --mute-rgb:    111, 140, 138;    --overlay-rgb: 5, 21, 23;        --panel-rgb:   8, 28, 30;      
+    --line-rgb:    29, 158, 147;     --accent-rgb:  64, 224, 208;     --mute-rgb:    111, 140, 138;    --overlay-rgb: 190, 247, 238;        --panel-rgb:   8, 28, 30;      
     --chrome-ink: #e8fffb; --chrome-ink-mute: #a9c7c3;
     --ink-on-accent: #08191c;
     --accent-ink: #0f4f4a; --accent-ink-hover: #1d9e93;
@@ -68,7 +68,7 @@
   --ink-mute:   #8a93b8;
 
   --line-rgb:    28, 58, 168;      --accent-rgb:  77, 127, 255;     --mute-rgb:    138, 147, 184;    --overlay-rgb: 10, 15, 40;       --panel-rgb:   13, 19, 48;
-  --topbar-img: url('/image/topbar_banner-blue.png');
+  --topbar-img: url('/image/topbar_banner-electro.png');
   --chrome-ink: var(--ink); --chrome-ink-mute: var(--ink-soft);
   --ink-on-accent: var(--abyss);
   --accent-ink: var(--frost); --accent-ink-hover: var(--aurora);
@@ -305,13 +305,13 @@ html[data-theme="blue"] .theme-toggle-thumb { left: 28px; }
   overflow: hidden;
   padding: clamp(3.5rem, 11vh, 7rem) 0 clamp(3rem, 9vh, 6rem);
   background: linear-gradient(rgba(var(--overlay-rgb), 0.78), rgba(var(--overlay-rgb), 0.92)),
-              url('banner-bg.png') center / cover;
+              url('banner-anemo.png') center / cover;
   transition: background-image 0.5s var(--ease);
 }
 
 html[data-theme="blue"] .hero {
   background-image: linear-gradient(rgba(var(--overlay-rgb), 0.78), rgba(var(--overlay-rgb), 0.92)),
-                     url('banner-bg-blue.png');
+                     url('banner-electro.png');
 }
 
 .hero::before,
@@ -684,6 +684,45 @@ html[data-theme="blue"] .hero {
   .next { right: 8px; }
 }
 
+/* ---- Aurora (light) theme: bright fade instead of dark overlay ----
+   Text that sat on the old dark overlay switches to deep teal so it stays legible. */
+html[data-theme="aurora"] {
+  --chrome-ink:      #0d2723;
+  --chrome-ink-mute: #2c4d48;
+}
+html[data-theme="aurora"] .wordmark,
+html[data-theme="aurora"] .oath-title {
+  background-image: linear-gradient(180deg, #0f4f4a, #1a8a80);
+}
+html[data-theme="aurora"] .hero-title {
+  background-image: linear-gradient(105deg, #0f4f4a 0%, #13736b 45%, #1a8a80 100%);
+}
+html[data-theme="aurora"] .creed {
+  background-image: linear-gradient(100deg, #0f4f4a, #13736b 50%, #12704f);
+}
+html[data-theme="aurora"] .hero-quote .g1 { color: #12704f; }
+html[data-theme="aurora"] .hero-quote .g2 { color: #0e6a80; }
+html[data-theme="aurora"] .hero-quote .g3 { color: #0f4f4a; }
+html[data-theme="aurora"] .uid b { color: #0f4f4a; }
+html[data-theme="aurora"] .vow dt { color: #0f6b63; }
+html[data-theme="aurora"] .verse { text-shadow: 0 1px 10px rgba(255, 255, 255, 0.7); }
+html[data-theme="aurora"] .caption h3 {
+  background: none !important;
+  -webkit-text-fill-color: currentColor !important;
+  color: #0f4f4a;
+}
+html[data-theme="aurora"] .caption p { color: #0f6b63; }
+html[data-theme="aurora"] .music-toggle {
+  background: rgba(255, 255, 255, 0.6);
+  border-color: rgba(var(--line-rgb), 0.5);
+  color: var(--teal-deep);
+}
+html[data-theme="aurora"] .music-toggle:hover {
+  background: rgba(var(--accent-rgb), 0.35);
+  border-color: var(--teal);
+}
+html[data-theme="aurora"] .music-toggle.muted { color: var(--chrome-ink-mute); }
+
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after {
     animation-duration: 0.01ms !important;
@@ -701,7 +740,7 @@ html[data-theme="blue"] .hero {
 
 <div id="loadingScreen" class="loading-screen" role="status" aria-label="Loading">
   <div class="loader-spinner">
-    <img src="/image/logo.png" alt="" class="loader-logo-img">
+    <img src="/image/Laterna_Vigilis_Shape.png" alt="" class="loader-logo-img" id="loaderLogo">
   </div>
 </div>
 
@@ -711,7 +750,7 @@ html[data-theme="blue"] .hero {
     <span class="uid">UID <b>1819282435</b> · Asia</span>
     <button id="themeToggle" class="theme-toggle" type="button" role="switch"
             aria-checked="false" aria-label="Switch color theme"
-            title="Switch to Lantern palette">
+            title="Switch to Twilight palette">
       <span class="theme-toggle-track">
         <span class="theme-toggle-thumb"></span>
       </span>
@@ -753,13 +792,13 @@ html[data-theme="blue"] .hero {
           <cite class="hero-cite" data-theme-content="aurora">— ???</cite>
         </blockquote>
       </div>
-      <img class="hero-crest" src="/image/logo.png" alt="Eaven crest">
+      <img class="hero-crest" id="heroCrest" src="/image/logo-anemo.png" alt="Eaven crest">
     </div>
   </section>
 
   <section id="roster" class="roster shell" aria-labelledby="roster-title">
     <div class="section-head">
-      <h2 id="roster-title"><span data-theme-content="blue">Oathkeepers</span><span data-theme-content="aurora">Druzhinas</span></h2>
+      <h2 id="roster-title"><span data-theme-content="blue">Oathkeepers</span><span data-theme-content="aurora">Druzhnas</span></h2>
       <span class="rule" aria-hidden="true"></span>
       <span class="count" id="rosterCount"></span>
     </div>
@@ -1077,13 +1116,24 @@ document.addEventListener('DOMContentLoaded', () => {
   if (!toggle) return;
 
   const TRACK = { aurora: 'bgmusic1.mp3', blue: 'bgmusic2.mp3' };
-  const FAVICON = { aurora: 'favicon.ico', blue: 'favicon-blue.ico' };
+  const FAVICON = { aurora: 'favicon-anemo.ico', blue: 'favicon-electro.ico' };
   const favicon = document.getElementById('favicon');
+  const CREST = { aurora: '/image/logo-anemo.png', blue: '/image/logo-electro.png' };
+  // hero crest + loading-screen logo both follow the theme
+  const logos = ['heroCrest', 'loaderLogo']
+    .map(id => document.getElementById(id))
+    .filter(Boolean);
+  logos.forEach(img => {
+    // if a logo file is missing, fall back to the default one instead of a broken image
+    img.addEventListener('error', () => {
+      if (img.getAttribute('src') !== CREST.aurora) img.setAttribute('src', CREST.aurora);
+    });
+  });
 
   function apply(theme) {
     html.setAttribute('data-theme', theme);
     toggle.setAttribute('aria-checked', theme === 'blue' ? 'true' : 'false');
-    toggle.title = theme === 'blue' ? 'Switch to Aurora palette' : 'Switch to Twilight palette';
+    toggle.title = theme === 'blue' ? 'Switch to Vila palette' : 'Switch to Lantern palette';
     if (music) {
       const track = TRACK[theme];
       if (music.getAttribute('src') !== track) {
@@ -1092,6 +1142,9 @@ document.addEventListener('DOMContentLoaded', () => {
         if (wasPlaying) music.play().catch(() => {});
       }
     }
+    logos.forEach(img => {
+      if (img.getAttribute('src') !== CREST[theme]) img.setAttribute('src', CREST[theme]);
+    });
     if (favicon) {
       const icon = FAVICON[theme];
       if (favicon.getAttribute('href') !== icon) {
