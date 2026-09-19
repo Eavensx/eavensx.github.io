@@ -1000,11 +1000,6 @@ document.addEventListener('DOMContentLoaded', () => {
     slides.forEach((s, i) => s.classList.toggle('active', i === current));
     railItems.forEach((d, i) =>
       d.setAttribute('aria-selected', i === current ? 'true' : 'false'));
-    railItems[current].scrollIntoView({
-      behavior: reduceMotion ? 'auto' : 'smooth',
-      block: 'nearest',
-      inline: 'nearest'
-    });
     restart();
   }
 
