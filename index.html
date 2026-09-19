@@ -13,20 +13,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Eaven</title>
 <meta name="description" content="Eaven — the Oathkeepers, and the vow sworn against the endless snow.">
-<link rel="icon" type="image/x-icon" href="favicon-anemo.ico" id="favicon">
-<script>
-  (function () {
-    var isBlue = document.documentElement.getAttribute('data-theme') === 'blue';
-    if (isBlue) document.getElementById('favicon').setAttribute('href', 'favicon-electro.ico');
-  })();
-</script>
-<script>
-  document.addEventListener('DOMContentLoaded', function () {
-    var isBlue = document.documentElement.getAttribute('data-theme') === 'blue';
-    var crest = document.getElementById('heroCrest');
-    if (crest && isBlue) crest.setAttribute('src', '/image/logo-electro.png');
-  });
-</script>
+<link rel="icon" type="image/x-icon" href="favicon.ico" id="favicon">
 
 <meta property="og:title" content="Eaven">
 <meta property="og:description" content="The Oathkeepers, and the vow sworn against the endless snow.">
@@ -44,9 +31,12 @@
 }
 
 :root {
-    --frost:      #8ff0e6;     --aurora:     #40e0d0;     --mint:       #7fdeac;     --teal:       #1d9e93;     --teal-deep:  #0f4f4a;     --abyss:      #08191c;     --abyss-lift: #0c2327;   
-    --ink:        #e8fffb;     --ink-soft:   #a9c7c3;     --ink-mute:   #6f8c8a;   
+    --frost:      #8ff0e6;     --aurora:     #40e0d0;     --mint:       #7fdeac;     --teal:       #1d9e93;     --teal-deep:  #0f4f4a;     --abyss:      #fff;     --abyss-lift: #f4f7f6;   
+    --ink:        #0d2723;     --ink-soft:   #3c5a55;     --ink-mute:   #63817b;   
     --line-rgb:    29, 158, 147;     --accent-rgb:  64, 224, 208;     --mute-rgb:    111, 140, 138;    --overlay-rgb: 5, 21, 23;        --panel-rgb:   8, 28, 30;      
+    --chrome-ink: #e8fffb; --chrome-ink-mute: #a9c7c3;
+    --ink-on-accent: #08191c;
+    --accent-ink: #0f4f4a; --accent-ink-hover: #1d9e93;
     --step--1: clamp(0.82rem, 0.79rem + 0.15vw, 0.9rem);
   --step-0:  clamp(1rem, 0.96rem + 0.2vw, 1.12rem);
   --step-1:  clamp(1.25rem, 1.16rem + 0.42vw, 1.5rem);
@@ -62,7 +52,7 @@
   --gutter: clamp(1.25rem, 5vw, 4rem);
   --radius: 14px;
   --ease: cubic-bezier(0.22, 0.68, 0.24, 1);
-  --topbar-img: url('/image/topbar-anemo.png');
+  --topbar-img: url('/image/topbar_banner.png');
 }
 
 :root[data-theme="blue"] {
@@ -78,7 +68,10 @@
   --ink-mute:   #8a93b8;
 
   --line-rgb:    28, 58, 168;      --accent-rgb:  77, 127, 255;     --mute-rgb:    138, 147, 184;    --overlay-rgb: 10, 15, 40;       --panel-rgb:   13, 19, 48;
-  --topbar-img: url('/image/topbar-electro.png');
+  --topbar-img: url('/image/topbar_banner-blue.png');
+  --chrome-ink: var(--ink); --chrome-ink-mute: var(--ink-soft);
+  --ink-on-accent: var(--abyss);
+  --accent-ink: var(--frost); --accent-ink-hover: var(--aurora);
 }
 
 [data-theme-content] { display: none !important; }
@@ -120,11 +113,11 @@ body.loading { overflow: hidden; }
 img { max-width: 100%; display: block; }
 
 a {
-  color: var(--mint);
+  color: var(--accent-ink);
   text-decoration: none;
   transition: color 0.25s var(--ease);
 }
-a:hover { color: var(--aurora); }
+a:hover { color: var(--accent-ink-hover); }
 
 :focus-visible {
   outline: 2px solid var(--aurora);
@@ -137,7 +130,7 @@ a:hover { color: var(--aurora); }
   left: -9999px;
   top: 0;
   background: var(--aurora);
-  color: var(--abyss);
+  color: var(--ink-on-accent);
   padding: 0.7rem 1.2rem;
   z-index: 10000;
   font-weight: 700;
@@ -229,7 +222,7 @@ a:hover { color: var(--aurora); }
 .uid {
   font-size: var(--step--1);
   letter-spacing: 0.06em;
-  color: var(--ink-soft);
+  color: var(--chrome-ink-mute);
   white-space: nowrap;
 }
 .uid b {
@@ -259,7 +252,7 @@ a:hover { color: var(--aurora); }
   transform: scale(1.07);
 }
 .music-toggle.muted {
-  color: var(--ink-mute);
+  color: var(--chrome-ink-mute);
   border-color: rgba(var(--mute-rgb), 0.35);
 }
 
@@ -312,13 +305,13 @@ html[data-theme="blue"] .theme-toggle-thumb { left: 28px; }
   overflow: hidden;
   padding: clamp(3.5rem, 11vh, 7rem) 0 clamp(3rem, 9vh, 6rem);
   background: linear-gradient(rgba(var(--overlay-rgb), 0.78), rgba(var(--overlay-rgb), 0.92)),
-              url('banner-anemo.png') center / cover;
+              url('banner-bg.png') center / cover;
   transition: background-image 0.5s var(--ease);
 }
 
 html[data-theme="blue"] .hero {
   background-image: linear-gradient(rgba(var(--overlay-rgb), 0.78), rgba(var(--overlay-rgb), 0.92)),
-                     url('banner-electro.png');
+                     url('banner-bg-blue.png');
 }
 
 .hero::before,
@@ -385,7 +378,7 @@ html[data-theme="blue"] .hero {
   margin: 0;
   padding-left: clamp(1rem, 2.5vw, 1.75rem);
   border-left: 2px solid var(--teal-deep);
-  color: var(--ink-soft);
+  color: var(--chrome-ink-mute);
   font-size: var(--step-0);
   line-height: 1.85;
 }
@@ -401,7 +394,7 @@ html[data-theme="blue"] .hero {
   font-size: var(--step--1);
   font-style: normal;
   letter-spacing: 0.08em;
-  color: var(--ink-mute);
+  color: var(--chrome-ink-mute);
 }
 
 .hero-crest {
@@ -426,7 +419,7 @@ html[data-theme="blue"] .hero {
   font-weight: 700;
   letter-spacing: 0.1em;
   margin: 0;
-  color: var(--frost);
+  color: var(--accent-ink);
 }
 
 .section-head .rule {
@@ -557,11 +550,11 @@ html[data-theme="blue"] .hero {
               background 0.25s var(--ease);
 }
 .rail-item:hover {
-  color: var(--frost);
+  color: var(--accent-ink);
   background: rgba(var(--line-rgb), 0.1);
 }
 .rail-item[aria-selected="true"] {
-  color: var(--abyss);
+  color: var(--ink-on-accent);
   background: linear-gradient(180deg, var(--frost), var(--mint));
   border-top-color: var(--aurora);
   font-weight: 700;
@@ -616,7 +609,7 @@ html[data-theme="blue"] .hero {
   font-size: var(--step-0);
   font-style: italic;
   line-height: 1.8;
-  color: var(--ink);
+  color: var(--chrome-ink);
 }
 
 .verse {
@@ -624,7 +617,7 @@ html[data-theme="blue"] .hero {
   font-style: italic;
   font-size: var(--step-0);
   line-height: 1.9;
-  color: var(--ink-soft);
+  color: var(--chrome-ink-mute);
   margin: 0 0 1.4rem;
   text-shadow: 0 2px 14px rgba(0, 0, 0, 0.6);
 }
@@ -648,7 +641,7 @@ html[data-theme="blue"] .hero {
   font-style: italic;
   font-size: var(--step-1);
   line-height: 1.85;
-  color: var(--ink);
+  color: var(--chrome-ink);
   padding-left: clamp(1rem, 3vw, 2rem);
   border-left: 1px solid var(--teal);
 }
@@ -718,7 +711,7 @@ html[data-theme="blue"] .hero {
     <span class="uid">UID <b>1819282435</b> · Asia</span>
     <button id="themeToggle" class="theme-toggle" type="button" role="switch"
             aria-checked="false" aria-label="Switch color theme"
-            title="Switch to Twilight palette">
+            title="Switch to Lantern palette">
       <span class="theme-toggle-track">
         <span class="theme-toggle-thumb"></span>
       </span>
@@ -760,7 +753,7 @@ html[data-theme="blue"] .hero {
           <cite class="hero-cite" data-theme-content="aurora">— ???</cite>
         </blockquote>
       </div>
-      <img class="hero-crest" id="heroCrest" src="/image/logo-anemo.png" alt="Eaven crest">
+      <img class="hero-crest" src="/image/logo.png" alt="Eaven crest">
     </div>
   </section>
 
@@ -968,6 +961,11 @@ document.addEventListener('DOMContentLoaded', () => {
     slides.forEach((s, i) => s.classList.toggle('active', i === current));
     railItems.forEach((d, i) =>
       d.setAttribute('aria-selected', i === current ? 'true' : 'false'));
+    railItems[current].scrollIntoView({
+      behavior: reduceMotion ? 'auto' : 'smooth',
+      block: 'nearest',
+      inline: 'nearest'
+    });
     restart();
   }
 
@@ -1065,7 +1063,6 @@ document.addEventListener('DOMContentLoaded', () => {
     if (!loader) return;
     loader.classList.add('hidden');
     document.body.classList.remove('loading');
-    setTimeout(() => loader.remove(), 700);
   }
   window.addEventListener('load', () => setTimeout(hide, 400));
   setTimeout(hide, 6000);
@@ -1075,13 +1072,13 @@ document.addEventListener('DOMContentLoaded', () => {
   const html = document.documentElement;
   const toggle = document.getElementById('themeToggle');
   const music = document.getElementById('bgMusic');
+  const loader = document.getElementById('loadingScreen');
+  let toggledOnce = false;
   if (!toggle) return;
 
   const TRACK = { aurora: 'bgmusic1.mp3', blue: 'bgmusic2.mp3' };
-  const FAVICON = { aurora: 'favicon-anemo.ico', blue: 'favicon-electro.ico' };
-  const CREST = { aurora: '/image/logo-anemo.png', blue: '/image/logo-electro.png' };
+  const FAVICON = { aurora: 'favicon.ico', blue: 'favicon-blue.ico' };
   const favicon = document.getElementById('favicon');
-  const crest = document.getElementById('heroCrest');
 
   function apply(theme) {
     html.setAttribute('data-theme', theme);
@@ -1101,18 +1098,22 @@ document.addEventListener('DOMContentLoaded', () => {
         favicon.setAttribute('href', icon);
       }
     }
-    if (crest) {
-      const img = CREST[theme];
-      if (crest.getAttribute('src') !== img) {
-        crest.setAttribute('src', img);
-      }
-    }
   }
 
   apply(html.getAttribute('data-theme') === 'blue' ? 'blue' : 'aurora');
 
   toggle.addEventListener('click', () => {
-    apply(html.getAttribute('data-theme') === 'blue' ? 'aurora' : 'blue');
+    const next = html.getAttribute('data-theme') === 'blue' ? 'aurora' : 'blue';
+    if (!toggledOnce && loader) {
+      toggledOnce = true;
+      loader.classList.remove('hidden');
+      setTimeout(() => {
+        apply(next);
+        setTimeout(() => loader.classList.add('hidden'), 400);
+      }, 350);
+    } else {
+      apply(next);
+    }
   });
 });
 </script>
